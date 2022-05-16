@@ -1,6 +1,7 @@
 /*
 机场签到 需要在脚本里填写邮箱密码
-cron 0 8 * * *  https://raw.githubusercontent.com/QiFengg/QuantumultX_Conf/main/Scripts/jcCheck.js, tag=机场签到
+corn 0 0 8 * * ? 
+https://raw.githubusercontent.com/QiFengg/QuantumultX_Conf/main/Scripts/jcCheck.js
 */
 
 /*
@@ -26,14 +27,7 @@ let iku = {
 };
 
 /*
-3.几鸡机场
-注册地址:https://b.luxury/waf/GGWE9QhLsLE74X422
-白嫖版 注册送10g 签到每天1g-4g随机 速度还行
-付费很多套餐 5块钱一个月300G 流量每隔31天重置 控制套餐购买人数
-*/
-
-/*
-4.优云机场
+3.优云机场
 注册地址:https://b.luxury/waf/GGWE9QhLsLE74X422
 白嫖版 注册送10g 签到每天1g-4g随机 速度还行
 付费很多套餐 5块钱一个月300G 流量每隔31天重置 控制套餐购买人数
@@ -67,16 +61,10 @@ const notify = $.isNode() ? require("./sendNotify") : "";
     await login("iku", "https://ikuuu.co/auth/login", iku);
   }
 
-  if (jj.email == "" && jj.pwd == "") {
-    console.log("几鸡邮箱密码为空,跳过执行\n\n");
-  } else {
-    await login("几鸡", "https://a.luxury/signin", jj);
-  }
-
   if (yy.email == "" && yy.pwd == "") {
     console.log("优云邮箱密码为空,跳过执行\n\n");
   } else {
-    await login("优云", "https://youyun777.net/signin", yy);
+    await login("优云", "https://youyun777.net/auth/login", yy);
   }
 })()
   .catch((e) => {
@@ -116,9 +104,7 @@ function login(name, url, raw, timeout = 0) {
               checkurl = "https://haojiahuo.live/user/checkin";
             } else if (name == "iku") {
               checkurl = "https://ikuuu.co/user/checkin";
-            } else if (name == "几鸡") {
-              checkurl = "https://a.luxury/user/checkin";
-            } else if (name == "yy") {
+            } else if (name == "优云") {
               checkurl = "https://youyun777.net/user/checkin";
             }
             await check(name, checkurl, cookie);
@@ -163,11 +149,9 @@ function check(name, checkurl, cookie) {
               data.trafficInfo["unUsedTraffic"];
           } else if (name == "iku") {
             msg = `${name}签到成功` + data.msg;
-          } else if (name == "几鸡") {
+          } else if (name == "优云") {
             msg =
-              `${name}签到成功` + data.msg + "您的当前流量为" + data.traffic;
-          } else if (name == "yy") {
-            msg = `${name}签到成功` + data.msg;
+              `${name}签到成功` + data.msg + "您的当前流量为" + data.Unused_Traffic;
           }
           console.log(`${name}机场 ${msg}\n\n`);
 
